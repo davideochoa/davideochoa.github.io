@@ -1,0 +1,53 @@
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 40px;
+  background-color: #f4f4f4;
+  color: #333;
+}
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+header h1 {
+  margin-bottom: 5px;
+  color: #004080;
+}
+header h2 {
+  margin-top: 0;
+  font-weight: normal;
+  color: #555;
+}
+section {
+  margin-top: 30px;
+}
+.badges {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.badges li {
+  margin: 5px;
+}
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 5px;
+  color: white;
+  font-size: 0.9em;
+}
+.badge.java { background-color: #ED8B00; }
+.badge.spring { background-color: #6DB33F; }
+.badge.hibernate { background-color: #59666C; }
+.badge.mysql { background-color: #00758F; }
+.badge.jenkins { background-color: #D24939; }
+.badge.tomcat { background-color: #F8DC75; color: #333; }
+.badge.swagger { background-color: #85EA2D; color: #333; }
+.badge.sonar { background-color: #4E9BCD; }
+.badge.openshift { background-color: #EE0000; }
