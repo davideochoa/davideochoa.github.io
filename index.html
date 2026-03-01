@@ -3,187 +3,518 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>David Ochoa - Java Developer</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>David Ochoa - Senior Java Backend Engineer</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --border: #1f2937;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --danger: #f97373;
+      --font: "Inter", system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; transition: 0.2s; }
+    a:hover { color: #7dd3fc; }
+
+    /* ── Language Switch ── */
+    .lang-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: rgba(2,6,23,0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .lang-bar button {
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-bar button.active,
+    .lang-bar button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* ── Layout ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+    /* ── Hero Section ── */
+    .hero {
+      background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(17,24,39,0.9));
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 20px 50px -12px rgba(0,0,0,0.5);
+    }
+    .hero-main h1 { font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    .hero-main .role { color: var(--accent); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
+    .hero-main .summary { font-size: 1.1rem; color: var(--text); margin-bottom: 2rem; max-width: 600px; }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-size: 1rem;
+      font-weight: 600; cursor: pointer; transition: 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: #0f172a; }
+    .btn-primary:hover { transform: translateY(-2px); background: #7dd3fc; }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: rgba(255,255,255,0.03); }
+    .btn-outline:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+    .hero-side {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+    }
+    .hero-side h3 { font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+    .hero-side dl { display: grid; grid-template-columns: auto 1fr; gap: 0.75rem 1.5rem; font-size: 0.95rem; }
+    .hero-side dt { font-weight: 600; color: var(--muted); }
+    .hero-side dd { color: var(--text); text-align: right; }
+
+    /* ── Main Content Grid ── */
+    .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; }
+
+    .section { margin-bottom: 3rem; }
+    .section-title {
+      font-size: 1.25rem; font-weight: 800; color: var(--text);
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-title::after { content: ""; height: 1px; flex: 1; background: var(--border); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      transition: 0.3s;
+    }
+    .card:hover { border-color: rgba(56,189,248,0.3); }
+
+    /* ── Experience Items ── */
+    .exp-item { position: relative; padding-left: 1.5rem; border-left: 2px solid var(--border); margin-bottom: 2.5rem; }
+    .exp-item::before {
+      content: ""; position: absolute; left: -7px; top: 0;
+      width: 12px; height: 12px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+    .exp-company { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .exp-date { font-size: 0.9rem; color: var(--muted); font-weight: 500; }
+    .exp-role { font-size: 1rem; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+    .exp-list { list-style: none; }
+    .exp-list li { position: relative; padding-left: 1.25rem; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.95rem; }
+    .exp-list li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+
+    /* ── Document Buttons ── */
+    .btn-doc {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem;
+      background: var(--accent-soft); color: var(--accent);
+      font-size: 0.85rem; font-weight: 600; border: 1px solid transparent;
+    }
+    .btn-doc:hover { background: var(--accent); color: #0f172a; }
+
+    /* ── Skills ── */
+    .skill-group { margin-bottom: 1.5rem; }
+    .skill-label { font-size: 0.85rem; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 0.75rem; display: block; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      padding: 0.4rem 0.8rem; border-radius: 0.5rem;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      font-size: 0.85rem; color: var(--text);
+    }
+
+    /* ── Education ── */
+    .edu-card { margin-bottom: 1rem; }
+    .edu-title { font-weight: 700; color: var(--text); font-size: 1rem; }
+    .edu-meta { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+
+    footer {
+      margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border);
+      text-align: center; color: var(--muted); font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 2rem; }
+      .main-grid { grid-template-columns: 1fr; }
+      .hero-main h1 { font-size: 2.25rem; }
+    }
+  </style>
 </head>
 <body>
-  <div class="language-switch">
-    <button onclick="showLanguage('en')">English</button>
-    <button onclick="showLanguage('es')">Español</button>
+
+  <div class="lang-bar">
+    <button class="active" id="btn-en" onclick="showLanguage('en')">English</button>
+    <button id="btn-es" onclick="showLanguage('es')">Español</button>
   </div>
 
-  <div class="container">
-    <!-- English Section -->
-    <section id="en">
-      <header>
-        <h1>David Ochoa</h1>
-        <h2>Java Developer | IT Support Specialist | Solutions Architect</h2>
+  <!-- ══════════════════════════════════════════
+       ENGLISH VERSION
+  ══════════════════════════════════════════ -->
+  <div id="lang-en">
+    <div class="page">
+      <header class="hero">
+        <div class="hero-main">
+          <h1>David Ochoa</h1>
+          <p class="role">Senior Software Engineer | Java Backend Specialist</p>
+          <p class="summary">
+            Over 16 years of experience building robust backend systems and critical IT infrastructure. 
+            Specialized in Java/Spring Boot microservices for the banking sector and large-scale process automation in public health.
+          </p>
+          <div class="hero-actions">
+            <a href="mailto:davideochoa@gmail.com" class="btn btn-primary">Hire Me</a>
+            <a href="https://linkedin.com/in/davideochoadiaz" target="_blank" class="btn btn-outline">LinkedIn</a>
+            <a href="https://github.com/davideocho" target="_blank" class="btn btn-outline">GitHub</a>
+          </div>
+        </div>
+        <aside class="hero-side">
+          <h3>Quick Info</h3>
+          <dl>
+            <dt>Location</dt><dd>Limerick, Ireland</dd>
+            <dt>Experience</dt><dd>16+ Years</dd>
+            <dt>English</dt><dd>B1/B2 (Improving)</dd>
+            <dt>Availability</dt><dd>Immediate</dd>
+            <dt>Visa</dt><dd><span style="color:var(--danger)">Sponsorship Required</span></dd>
+          </dl>
+        </aside>
       </header>
 
-      <section>
-        <h3>Professional Profile</h3>
-        <p>Senior Java Developer with over 16 years of experience in backend development, systems integration, automation, and technical support. Skilled in Spring Boot, JPA (Hibernate), REST APIs, Tomcat deployments, and cloud environments (OpenShift). Experienced in healthcare and banking industries, including SLA compliance, incident tracking, and generation of PDF/email reports using JasperReports.</p>
-      </section>
+      <div class="main-grid">
+        <main>
+          <section class="section">
+            <h2 class="section-title">Professional Experience</h2>
 
-      <section>
-        <h3>Work Experience</h3>
-        <h4>Banregio (Remote) – Java Backend Developer</h4>
-        <ul>
-          <li>Automated PIN email delivery for new cardholders.</li>
-          <li>Generated reports, contracts, and promotions using JasperReports.</li>
-          <li>Integrated cron-based microservices to automate account balance reports, marketing emails, and legal document delivery.</li>
-          <li>Supported frontend flows for cards, insurance, and promotions.</li>
-          <li>Worked with OpenShift, Jenkins, and SonarQube for CI/CD and quality control.</li>
-          <li>Ensured incident resolution under 24h SLA.</li>
-        </ul>
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-company">Banregio (Banco Regional)</span>
+                <span class="exp-date">2022 — 2024</span>
+              </div>
+              <p class="exp-role">Senior Java Backend Developer</p>
+              <ul class="exp-list">
+                <li>Architected and developed <strong>Spring Boot microservices</strong> for Digital Onboarding of credit and debit cards.</li>
+                <li>Implemented secure authentication flows using <strong>JWT</strong> and integrated AML/KYC validation APIs.</li>
+                <li>Designed an orchestration layer for insurance products (Life, Auto, Home), centralizing frontend requests.</li>
+                <li>Automated legal contract generation using <strong>JasperReports</strong> and institutional email delivery.</li>
+                <li>Managed deployments on <strong>OpenShift</strong> and maintained code quality via SonarQube and Jenkins CI/CD.</li>
+              </ul>
+              <a href="docs/Carta Banregio.pdf" target="_blank" class="btn-doc">📄 View Work Certificate</a>
+            </div>
 
-        <h4>INDESALUD – Full Stack Developer & Technical Support</h4>
-        <ul>
-          <li>Created web/mobile apps for hospital bed tracking, patient routing, and incident management.</li>
-          <li>Designed systems for inventory and vehicle maintenance with quantitative and qualitative indicators.</li>
-          <li>Migrated internal tools from GWT to Vaadin to support mobile signatures and responsive design.</li>
-          <li>Provided tech support for directors and hospital staff, including backup, virus scans, and IP telephony.</li>
-          <li>Delivered reports for audits and advised on IT equipment purchasing.</li>
-        </ul>
-      </section>
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-company">Ministry of Health (INDESALUD)</span>
+                <span class="exp-meta">2008 — 2022</span>
+              </div>
+              <p class="exp-role">Software Engineer & IT Infrastructure Lead</p>
+              <ul class="exp-list">
+                <li>Developed a <strong>Universal Inventory System</strong> for 11 hospitals and 150 health centers using Java and MySQL.</li>
+                <li>Built an IT Incident Management system, later migrated to <strong>Vaadin</strong> for mobile responsiveness.</li>
+                <li>Designed a Vehicle Fleet Control system to track maintenance costs and optimize fleet replacement.</li>
+                <li>Led IT support operations: structured cabling, IP telephony, and server maintenance across the state.</li>
+                <li>Automated audit reporting and certificate issuance using JasperReports.</li>
+              </ul>
+            </div>
 
-      <section>
-        <h3>Technical Skills</h3>
-        <ul class="badges">
-          <li><span class="badge java">Java</span></li>
-          <li><span class="badge spring">Spring Boot</span></li>
-          <li><span class="badge hibernate">Hibernate (JPA)</span></li>
-          <li><span class="badge mysql">MySQL / Oracle</span></li>
-          <li><span class="badge jenkins">Jenkins</span></li>
-          <li><span class="badge tomcat">Apache Tomcat</span></li>
-          <li><span class="badge swagger">Swagger/OpenAPI</span></li>
-          <li><span class="badge sonar">SonarQube</span></li>
-          <li><span class="badge openshift">OpenShift</span></li>
-          <li><span class="badge linux">Linux / Windows</span></li>
-        </ul>
-      </section>
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-company">Tecnológico de Calkiní (ITESCAM)</span>
+                <span class="exp-date">2014 — 2016</span>
+              </div>
+              <p class="exp-role">Computer Science Professor</p>
+              <ul class="exp-list">
+                <li>Taught Object-Oriented Programming (Java), Networking, and Distributed Databases.</li>
+                <li>Mentored students in web development and cybersecurity projects.</li>
+              </ul>
+            </div>
+          </section>
 
-      <section>
-        <h3>Education</h3>
-        <ul>
-          <li><strong>BSc in Computer Science (Networks)</strong> – Instituto Tecnológico de Campeche (1994–2001)</li>
-          <li><strong>MSc in Strategic Software Engineering Management</strong> – UNINI México (2017–2019, completed)</li>
-        </ul>
-      </section>
+          <section class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="card">
+              <div class="edu-card">
+                <p class="edu-title">MSc in Artificial Intelligence</p>
+                <p class="edu-meta">Accepted & In Progress (2nd Semester) | 2024 — Present</p>
+                <a href="docs/Carta Aceptacion Maestria IA.pdf" target="_blank" class="btn-doc">📄 View Acceptance Letter</a>
+              </div>
+              <div class="edu-card" style="margin-top:1.5rem;">
+                <p class="edu-title">MSc in Strategic Management in Software Engineering</p>
+                <p class="edu-meta">UNINI México | 2017 — 2019 | All Credits Completed</p>
+                <a href="docs/Maestria Direccion Ingenieria de Software.pdf" target="_blank" class="btn-doc">📄 View Transcript</a>
+              </div>
+              <div class="edu-card" style="margin-top:1.5rem;">
+                <p class="edu-title">BSc in Computer Science (Networking)</p>
+                <p class="edu-meta">Instituto Tecnológico de Campeche | 1994 — 2001</p>
+                <a href="docs/Titulo Licenciatura.pdf" target="_blank" class="btn-doc">📄 View Degree & Translation</a>
+              </div>
+            </div>
+          </section>
+        </main>
 
-      <section>
-        <h3>Courses & Certifications</h3>
-        <ul>
-          <li>Azure Cloud Basics – Microsoft / Internal Training</li>
-          <li>ITIL Fundamentals (applied in incident tracking systems)</li>
-          <li>Technical Support – Coursera, Slim Foundation</li>
-          <li>Network Administration – ASTER Mérida</li>
-          <li>English Course – RightWord School, Ireland (current)</li>
-        </ul>
-      </section>
+        <aside>
+          <section class="section">
+            <h2 class="section-title">Technical Stack</h2>
+            <div class="card">
+              <div class="skill-group">
+                <span class="skill-label">Backend</span>
+                <div class="skill-tags">
+                  <span class="tag">Java 8/11/17</span>
+                  <span class="tag">Spring Boot</span>
+                  <span class="tag">Spring Security</span>
+                  <span class="tag">Hibernate</span>
+                  <span class="tag">REST APIs</span>
+                  <span class="tag">JasperReports</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-label">Cloud & DevOps</span>
+                <div class="skill-tags">
+                  <span class="tag">Docker</span>
+                  <span class="tag">OpenShift</span>
+                  <span class="tag">Jenkins</span>
+                  <span class="tag">SonarQube</span>
+                  <span class="tag">Tomcat</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-label">Databases</span>
+                <div class="skill-tags">
+                  <span class="tag">MySQL</span>
+                  <span class="tag">Oracle</span>
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">SQL Server</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-label">Infrastructure</span>
+                <div class="skill-tags">
+                  <span class="tag">Linux/Unix</span>
+                  <span class="tag">Networking</span>
+                  <span class="tag">IP Telephony</span>
+                  <span class="tag">ITIL</span>
+                </div>
+              </div>
+            </div>
+          </section>
 
-      <section>
-        <h3>Languages & Availability</h3>
-        <p>English level: B1 (currently improving in Ireland). Available for relocation. Seeking full-time position with visa sponsorship in Europe (preferably Ireland or Spain).</p>
-        <p>Dual banking support (Mexico & Ireland). Immediate availability.</p>
-      </section>
+          <section class="section">
+            <h2 class="section-title">Contact</h2>
+            <div class="card">
+              <p style="margin-bottom:1rem;">📍 Limerick, Ireland</p>
+              <p style="margin-bottom:1rem;">📧 <a href="mailto:davideochoa@gmail.com">davideochoa@gmail.com</a></p>
+              <p>📞 <a href="tel:+353834233432">+353 83 4233 432</a></p>
+            </div>
+          </section>
+        </aside>
+      </div>
 
-      <section>
-        <h3>Contact</h3>
-        <p>📍 Limerick, Ireland</p>
-        <p>📧 <a href="mailto:davideochoa@gmail.com">davideochoa@gmail.com</a></p>
-        <p>📞 +353 83 4233 432</p>
-      </section>
-    </section>
+      <footer>
+        <p>© <span class="yr"></span> David Ochoa | Senior Software Engineer</p>
+      </footer>
+    </div>
+  </div>
 
-    <!-- Spanish Section -->
-    <section id="es" style="display:none;">
-      <header>
-        <h1>David Ochoa</h1>
-        <h2>Desarrollador Java | Especialista en Soporte Técnico | Arquitecto de Soluciones</h2>
+  <!-- ══════════════════════════════════════════
+       SPANISH VERSION
+  ══════════════════════════════════════════ -->
+  <div id="lang-es" style="display:none;">
+    <div class="page">
+      <header class="hero">
+        <div class="hero-main">
+          <h1>David Ochoa</h1>
+          <p class="role">Ingeniero de Software Senior | Especialista en Backend Java</p>
+          <p class="summary">
+            Más de 16 años de experiencia construyendo sistemas backend robustos e infraestructura IT crítica. 
+            Especializado en microservicios Java/Spring Boot para el sector bancario y automatización a gran escala.
+          </p>
+          <div class="hero-actions">
+            <a href="mailto:davideochoa@gmail.com" class="btn btn-primary">Contáctame</a>
+            <a href="https://linkedin.com/in/davideochoadiaz" target="_blank" class="btn btn-outline">LinkedIn</a>
+            <a href="https://github.com/davideocho" target="_blank" class="btn btn-outline">GitHub</a>
+          </div>
+        </div>
+        <aside class="hero-side">
+          <h3>Info Rápida</h3>
+          <dl>
+            <dt>Ubicación</dt><dd>Limerick, Irlanda</dd>
+            <dt>Experiencia</dt><dd>16+ Años</dd>
+            <dt>Inglés</dt><dd>B1/B2 (En mejora)</dd>
+            <dt>Disponibilidad</dt><dd>Inmediata</dd>
+            <dt>Visa</dt><dd><span style="color:var(--danger)">Requiere Patrocinio</span></dd>
+          </dl>
+        </aside>
       </header>
 
-      <section>
-        <h3>Perfil Profesional</h3>
-        <p>Desarrollador Java con más de 16 años de experiencia en desarrollo backend, integración de sistemas, automatización y soporte técnico. Experto en Spring Boot, JPA (Hibernate), REST APIs y despliegue en Tomcat. Experiencia en sectores de salud y banca. Cumplimiento de SLAs, trazabilidad de incidencias y generación de reportes con JasperReports.</p>
-      </section>
+      <div class="main-grid">
+        <main>
+          <section class="section">
+            <h2 class="section-title">Experiencia Profesional</h2>
 
-      <section>
-        <h3>Experiencia Laboral</h3>
-        <h4>Banregio (Remoto) – Desarrollador Backend</h4>
-        <ul>
-          <li>Automatización del envío por correo electrónico del PIN de nuevas tarjetas.</li>
-          <li>Generación de reportes, contratos y promociones vía JasperReports.</li>
-          <li>Integración de microservicios en cron para reportes de saldo, contratos y promociones.</li>
-          <li>Soporte a flujos frontend de tarjetas, seguros y promociones.</li>
-          <li>Uso de OpenShift, Jenkins y SonarQube en CI/CD y revisión de código.</li>
-          <li>Atención de incidencias bajo SLA de 24 horas.</li>
-        </ul>
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-company">Banregio (Banco Regional)</span>
+                <span class="exp-date">2022 — 2024</span>
+              </div>
+              <p class="exp-role">Desarrollador Backend Java Senior</p>
+              <ul class="exp-list">
+                <li>Arquitectura y desarrollo de <strong>microservicios Spring Boot</strong> para Onboarding Digital de tarjetas.</li>
+                <li>Implementación de flujos de seguridad con <strong>JWT</strong> e integración de APIs de validación PLD/KYC.</li>
+                <li>Diseño de capa de orquestación para seguros (Vida, Auto, Hogar), centralizando peticiones del frontend.</li>
+                <li>Automatización de contratos legales con <strong>JasperReports</strong> y entrega por correo institucional.</li>
+                <li>Gestión de despliegues en <strong>OpenShift</strong> y calidad de código con SonarQube y Jenkins.</li>
+              </ul>
+              <a href="docs/Carta Banregio.pdf" target="_blank" class="btn-doc">📄 Ver Constancia Laboral</a>
+            </div>
 
-        <h4>INDESALUD – Desarrollador Full Stack y Soporte Técnico</h4>
-        <ul>
-          <li>Aplicaciones para camas hospitalarias, trazabilidad de pacientes y registro de incidencias.</li>
-          <li>Sistemas de inventario y mantenimiento vehicular con indicadores cuantitativos y cualitativos.</li>
-          <li>Migración de herramientas internas de GWT a Vaadin (compatible con móviles y firmas digitales).</li>
-          <li>Soporte a directores y personal médico (respaldo, antivirus, telefonía IP).</li>
-          <li>Reportes de auditoría y recomendaciones para compra de equipo.</li>
-        </ul>
-      </section>
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-company">Secretaría de Salud (INDESALUD)</span>
+                <span class="exp-meta">2008 — 2022</span>
+              </div>
+              <p class="exp-role">Ingeniero de Software y Líder de Infraestructura IT</p>
+              <ul class="exp-list">
+                <li>Desarrollo del <strong>Sistema de Inventario Universal</strong> para 11 hospitales y 150 centros de salud.</li>
+                <li>Creación del sistema de Gestión de Incidencias IT, migrado a <strong>Vaadin</strong> para acceso móvil.</li>
+                <li>Diseño del sistema de Control Vehicular para optimizar costos de mantenimiento y renovación de flota.</li>
+                <li>Liderazgo en soporte IT: cableado estructurado, telefonía IP y mantenimiento de servidores estatales.</li>
+                <li>Automatización de reportes de auditoría y certificados con JasperReports.</li>
+              </ul>
+            </div>
 
-      <section>
-        <h3>Habilidades Técnicas</h3>
-        <ul class="badges">
-          <li><span class="badge java">Java</span></li>
-          <li><span class="badge spring">Spring Boot</span></li>
-          <li><span class="badge hibernate">Hibernate (JPA)</span></li>
-          <li><span class="badge mysql">MySQL / Oracle</span></li>
-          <li><span class="badge jenkins">Jenkins</span></li>
-          <li><span class="badge tomcat">Apache Tomcat</span></li>
-          <li><span class="badge swagger">Swagger/OpenAPI</span></li>
-          <li><span class="badge sonar">SonarQube</span></li>
-          <li><span class="badge openshift">OpenShift</span></li>
-          <li><span class="badge linux">Linux / Windows</span></li>
-        </ul>
-      </section>
+            <div class="exp-item">
+              <div class="exp-header">
+                <span class="exp-company">Tecnológico de Calkiní (ITESCAM)</span>
+                <span class="exp-date">2014 — 2016</span>
+              </div>
+              <p class="exp-role">Profesor de Ingeniería en Sistemas</p>
+              <ul class="exp-list">
+                <li>Cátedra en Programación Orientada a Objetos (Java), Redes y Bases de Datos Distribuidas.</li>
+                <li>Mentoría en proyectos de desarrollo web y ciberseguridad.</li>
+              </ul>
+            </div>
+          </section>
 
-      <section>
-        <h3>Formación Académica</h3>
-        <ul>
-          <li><strong>Licenciatura en Informática (Especialidad en Redes)</strong> – Instituto Tecnológico de Campeche (1994–2001)</li>
-          <li><strong>Maestría en Gestión Estratégica de la Ingeniería de Software</strong> – UNINI México (2017–2019, terminada)</li>
-        </ul>
-      </section>
+          <section class="section">
+            <h2 class="section-title">Educación</h2>
+            <div class="card">
+              <div class="edu-card">
+                <p class="edu-title">Maestría en Inteligencia Artificial</p>
+                <p class="edu-meta">Aceptado y En Curso (2do Semestre) | 2024 — Presente</p>
+                <a href="docs/Carta Aceptacion Maestria IA.pdf" target="_blank" class="btn-doc">📄 Ver Carta de Aceptación</a>
+              </div>
+              <div class="edu-card" style="margin-top:1.5rem;">
+                <p class="edu-title">Maestría en Gestión Estratégica de la Ingeniería de Software</p>
+                <p class="edu-meta">UNINI México | 2017 — 2019 | Créditos Terminados</p>
+                <a href="docs/Maestria Direccion Ingenieria de Software.pdf" target="_blank" class="btn-doc">📄 Ver Constancia de Estudios</a>
+              </div>
+              <div class="edu-card" style="margin-top:1.5rem;">
+                <p class="edu-title">Licenciatura en Informática (Especialidad en Redes)</p>
+                <p class="edu-meta">Instituto Tecnológico de Campeche | 1994 — 2001</p>
+                <a href="docs/Titulo Licenciatura.pdf" target="_blank" class="btn-doc">📄 Ver Título y Traducción</a>
+              </div>
+            </div>
+          </section>
+        </main>
 
-      <section>
-        <h3>Cursos y Certificaciones</h3>
-        <ul>
-          <li>Fundamentos de Azure – Microsoft</li>
-          <li>ITIL (aplicado en sistema de incidencias)</li>
-          <li>Soporte Técnico – Coursera, Fundación Slim</li>
-          <li>Administración de redes – ASTER Mérida</li>
-          <li>Inglés – RightWord School, Irlanda (actualmente)</li>
-        </ul>
-      </section>
+        <aside>
+          <section class="section">
+            <h2 class="section-title">Stack Técnico</h2>
+            <div class="card">
+              <div class="skill-group">
+                <span class="skill-label">Backend</span>
+                <div class="skill-tags">
+                  <span class="tag">Java 8/11/17</span>
+                  <span class="tag">Spring Boot</span>
+                  <span class="tag">Spring Security</span>
+                  <span class="tag">Hibernate</span>
+                  <span class="tag">REST APIs</span>
+                  <span class="tag">JasperReports</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-label">Cloud & DevOps</span>
+                <div class="skill-tags">
+                  <span class="tag">Docker</span>
+                  <span class="tag">OpenShift</span>
+                  <span class="tag">Jenkins</span>
+                  <span class="tag">SonarQube</span>
+                  <span class="tag">Tomcat</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-label">Bases de Datos</span>
+                <div class="skill-tags">
+                  <span class="tag">MySQL</span>
+                  <span class="tag">Oracle</span>
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">SQL Server</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-label">Infraestructura</span>
+                <div class="skill-tags">
+                  <span class="tag">Linux/Unix</span>
+                  <span class="tag">Redes</span>
+                  <span class="tag">Telefonía IP</span>
+                  <span class="tag">ITIL</span>
+                </div>
+              </div>
+            </div>
+          </section>
 
-      <section>
-        <h3>Idiomas y Disponibilidad</h3>
-        <p>Nivel de inglés: B1 (en curso). Disponible para reubicación inmediata. Buscando empleo con patrocinio de visa en Europa (Irlanda o España).</p>
-        <p>Cuentas bancarias en México e Irlanda.</p>
-      </section>
+          <section class="section">
+            <h2 class="section-title">Contacto</h2>
+            <div class="card">
+              <p style="margin-bottom:1rem;">📍 Limerick, Irlanda</p>
+              <p style="margin-bottom:1rem;">📧 <a href="mailto:davideochoa@gmail.com">davideochoa@gmail.com</a></p>
+              <p>📞 <a href="tel:+353834233432">+353 83 4233 432</a></p>
+            </div>
+          </section>
+        </aside>
+      </div>
 
-      <section>
-        <h3>Contacto</h3>
-        <p>📍 Limerick, Irlanda</p>
-        <p>📧 <a href="mailto:davideochoa@gmail.com">davideochoa@gmail.com</a></p>
-        <p>📞 +353 83 4233 432</p>
-      </section>
-    </section>
+      <footer>
+        <p>© <span class="yr"></span> David Ochoa | Ingeniero de Software Senior</p>
+      </footer>
+    </div>
   </div>
 
   <script>
+    document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
+
     function showLanguage(lang) {
-      document.getElementById('en').style.display = (lang === 'en') ? 'block' : 'none';
-      document.getElementById('es').style.display = (lang === 'es') ? 'block' : 'none';
+      document.getElementById('lang-en').style.display = lang === 'en' ? 'block' : 'none';
+      document.getElementById('lang-es').style.display = lang === 'es' ? 'block' : 'none';
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
     }
   </script>
 </body>
